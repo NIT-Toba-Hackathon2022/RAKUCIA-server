@@ -268,6 +268,7 @@ export class LinebotService {
     const richMenuId = await client.createRichMenu(richMenu);
     await client.setRichMenuImage(richMenuId, fs.createReadStream(join(process.cwd(), 'src/linebot/richmenu.png')));
     await client.createRichMenu(richMenu);
+    await client.setDefaultRichMenu(richMenuId);
   }
 
   createFoodMessage(items: FoodCreateInput[], id: string): FlexMessage {
