@@ -40,12 +40,15 @@ export class FoodService {
     });
   }
 
-  async updateFood(id: number, update_data: FoodUpdateInput): Promise<Food> {
+  async updateFood(id: number, add_to_list: number, leave_flag: number): Promise<Food> {
     return this.prisma.food.update({
       where: {
         id,
       },
-      data: update_data,
+      data: {
+        add_to_list,
+        leave_flag,
+      },
     });
   }
 

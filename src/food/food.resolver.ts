@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Food } from './food.model';
 import { FoodService } from './food.service';
-import { FoodCreateInput, FoodUpdateInput } from './food.input';
+import { FoodCreateInput } from './food.input';
 
 @Resolver()
 export class FoodResolver {
@@ -23,8 +23,12 @@ export class FoodResolver {
   }
 
   @Mutation(() => Food, { name: 'updateFood' })
-  updateFood(@Args('id') id: number, @Args('update_data') update_data: FoodUpdateInput): Promise<Food> {
-    return this.foodService.updateFood(id, update_data);
+  updateFood(
+    @Args('id') id: number,
+    @Args('add_to_list') add_to_list: number,
+    @Args('leave_flag') leave_flag: number,
+  ): Promise<Food> {
+    return this.foodService.updateFood(id, add_to_list, leave_flag);
   }
 
   @Mutation(() => [Food], { name: 'deleteFood' })
