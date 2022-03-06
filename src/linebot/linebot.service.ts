@@ -327,10 +327,9 @@ export class LinebotService {
           {
             type: 'button',
             action: {
-              type: 'postback',
-              label: '食べたい！',
-              data: `${index},${id}`,
-              displayText: `${item.recipe_title} を追加します`,
+              type: 'uri',
+              label: 'レシピを見る',
+              uri: item.recipe_url,
             },
             style: 'primary',
             color: '#EFBA52',
