@@ -5,7 +5,6 @@ import { join } from 'path';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { LinebotConfigService } from './linebot.config.service';
-import { richMenu } from './linebot.data';
 import { chooseFoodCategory, throwIdFromCategory, throwNameFromCategory, fetchData } from '../food/food.dto';
 import { FoodCreateInput } from '../food/food.input';
 import { PrismaService } from '../prisma/prisma.service';
@@ -265,10 +264,78 @@ export class LinebotService {
 
   async setRichMenu(): Promise<void> {
     const client = new Client(this.linebotConfigService.createLinebotOptions());
-    const richMenuId = await client.createRichMenu(richMenu);
-    await client.setRichMenuImage(richMenuId, fs.createReadStream('src/linebot/richmenu.png'));
+    const richMenuId = await client.createRichMenu({
+      size: {
+        width: 1200,
+        height: 405,
+      },
+      selected: true,
+      name: 'リッチメニュー',
+      chatBarText: 'メニュー一覧',
+      areas: [
+        {
+          bounds: {
+            x: 0,
+            y: 0,
+            width: 600,
+            height: 405,
+          },
+          action: {
+            type: 'uri',
+            uri: process.env.LIFF_URL,
+          },
+        },
+        {
+          bounds: {
+            x: 600,
+            y: 0,
+            width: 600,
+            height: 405,
+          },
+          action: {
+            type: 'postback',
+            data: 'choose',
+          },
+        },
+      ],
+    });
+    await client.setRichMenuImage(richMenuId, fs.readFileSync(join(process.cwd(), 'src/linebot/richmenu.png')));
     await client.setDefaultRichMenu(richMenuId);
-    await client.createRichMenu(richMenu);
+    await client.createRichMenu({
+      size: {
+        width: 1200,
+        height: 405,
+      },
+      selected: true,
+      name: 'リッチメニュー',
+      chatBarText: 'メニュー一覧',
+      areas: [
+        {
+          bounds: {
+            x: 0,
+            y: 0,
+            width: 600,
+            height: 405,
+          },
+          action: {
+            type: 'uri',
+            uri: process.env.LIFF_URL,
+          },
+        },
+        {
+          bounds: {
+            x: 600,
+            y: 0,
+            width: 600,
+            height: 405,
+          },
+          action: {
+            type: 'postback',
+            data: 'choose',
+          },
+        },
+      ],
+    });
   }
 
   createFoodMessage(items: FoodCreateInput[], id: string): FlexMessage {
