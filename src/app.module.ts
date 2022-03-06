@@ -19,10 +19,6 @@ import { LinebotConfigService } from './linebot/linebot.config.service';
       sortSchema: true,
       debug: process.env.NODE_ENV === 'production' ? false : true,
       playground: process.env.NODE_ENV === 'production' ? false : true,
-      cors: {
-        origin: process.env.ORIGINS?.split(','),
-        credentials: true,
-      },
     }),
     FoodModule,
     LinebotModule,
