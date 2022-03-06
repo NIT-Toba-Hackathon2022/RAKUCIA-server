@@ -7,7 +7,7 @@ services:
     command:
       [
         "/cloud_sql_proxy",
-        "-instances=$CLOUDSQL_PROXY_CONNECTION_NAME=tcp:0.0.0.0:5432",
+        "-instances=$CLOUDSQL_PROXY_CONNECTION_NAME=tcp:0.0.0.0:3306",
         "-credential_file=/gcp-key.blog-training-app.json",
       ]
     volumes:
@@ -15,4 +15,4 @@ services:
         source: "~/.config/gcloud/application_default_credentials.json"
         target: "/gcp-key.blog-training-app.json"
     ports:
-      - "45432:5432"
+      - "45432:3306"
