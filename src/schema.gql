@@ -25,15 +25,10 @@ input FoodCreateInput {
   user_id: String!
 }
 
-input FoodUpdateInput {
-  add_to_list: Int!
-  leave_flag: Int!
-}
-
 type Mutation {
   addFood(food_data: FoodCreateInput!): Food!
   deleteFood(user_id: String!): [Food!]!
-  updateFood(id: Float!, update_data: FoodUpdateInput!): Food!
+  updateFood(add_to_list: Float!, id: Float!, leave_flag: Float!): Food!
 }
 
 type Query {
